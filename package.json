@@ -1,0 +1,18 @@
+{
+  "name": "csc418-assignment-submission-portal",
+  "version": "1.0.0",
+  "description": "Assignment Submission Portal with automated testing for the CSC418 DevOps Lab Midterm.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "devops",
+    "nodejs",
+    "github-actions",
+    "automated-testing",
+    "assignment-portal"
+  ],
+  "author": "Muhammad Atif Kamran",
+  "license": "MIT"
+}

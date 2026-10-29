@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="CSC418 Assignment Submission Portal"
+    >
+
+    <title>Assignment Submission Portal</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container">
+            <p class="course-code">CSC418 – DevOps for Cloud Computing</p>
+            <h1>Assignment Submission Portal</h1>
+            <p class="header-description">
+                Submit assignment details using a valid online submission URL.
+            </p>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="card form-section">
+            <div class="section-heading">
+                <div>
+                    <p class="section-label">Student Portal</p>
+                    <h2>Submit an Assignment</h2>
+                </div>
+
+                <span class="required-note">
+                    Fields marked * are required
+                </span>
+            </div>
+
+            <div
+                id="statusMessage"
+                class="status-message"
+                role="alert"
+                aria-live="polite"
+            ></div>
+
+            <form id="submissionForm" novalidate>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="studentName">
+                            Student Name <span aria-hidden="true">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="studentName"
+                            name="studentName"
+                            placeholder="e.g. Muhammad Atif Kamran"
+                            autocomplete="name"
+                        >
+
+                        <small
+                            id="studentNameError"
+                            class="error-message"
+                        ></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registrationNumber">
+                            Registration Number
+                            <span aria-hidden="true">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="registrationNumber"
+                            name="registrationNumber"
+                            placeholder="e.g. FA23-BSE-039"
+                            autocomplete="off"
+                        >
+
+                        <small
+                            id="registrationNumberError"
+                            class="error-message"
+                        ></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assignmentTitle">
+                            Assignment Title
+                            <span aria-hidden="true">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="assignmentTitle"
+                            name="assignmentTitle"
+                            placeholder="e.g. DevOps Lab Midterm"
+                            autocomplete="off"
+                        >
+
+                        <small
+                            id="assignmentTitleError"
+                            class="error-message"
+                        ></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="submissionUrl">
+                            Submission URL
+                            <span aria-hidden="true">*</span>
+                        </label>
+
+                        <input
+                            type="url"
+                            id="submissionUrl"
+                            name="submissionUrl"
+                            placeholder="https://github.com/username/repository"
+                            autocomplete="url"
+                        >
+
+                        <small
+                            id="submissionUrlError"
+                            class="error-message"
+                        ></small>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="primary-button">
+                        Submit Assignment
+                    </button>
+
+                    <button
+                        type="reset"
+                        id="resetButton"
+                        class="secondary-button"
+                    >
+                        Reset Form
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <section class="card submissions-section">
+            <div class="section-heading submissions-heading">
+                <div>
+                    <p class="section-label">Submission Record</p>
+                    <h2>Saved Submissions</h2>
+                </div>
+
+                <div class="submission-actions">
+                    <span id="submissionCount" class="submission-count">
+                        0 submissions
+                    </span>
+
+                    <button
+                        type="button"
+                        id="clearAllButton"
+                        class="danger-button"
+                    >
+                        Clear All
+                    </button>
+                </div>
+            </div>
+
+            <div id="emptyState" class="empty-state">
+                <h3>No submissions saved</h3>
+                <p>
+                    Complete the form above to add the first assignment
+                    submission.
+                </p>
+            </div>
+
+            <div
+                id="tableContainer"
+                class="table-container"
+                hidden
+            >
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Student</th>
+                            <th scope="col">Registration No.</th>
+                            <th scope="col">Assignment</th>
+                            <th scope="col">Submission Link</th>
+                            <th scope="col">Submitted At</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="submissionTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                CSC418 DevOps for Cloud Computing –
+                Lab Midterm Project
+            </p>
+        </div>
+    </footer>
+
+    <script src="validation.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
