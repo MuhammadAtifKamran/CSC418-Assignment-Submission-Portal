@@ -1,15 +1,24 @@
-name: CSC418 Automated Tests and Local Report
+name: CSC418 Tests, Local Report and Pages Deployment
 
 on:
   push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: csc418-pages
+  cancel-in-progress: false
 
 jobs:
   test-and-report:
     name: Test and Deliver Local JSON Report
+
     runs-on:
       - self-hosted
       - Windows
@@ -59,4 +68,40 @@ jobs:
         run: |
           Write-Error "One or more automated tests failed."
           exit 1
-          
+
+  prepare-pages:
+    name: Prepare GitHub Pages Artifact
+    needs:
+      - test-and-report
+
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out tested revision
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static frontend
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./public
+
+  deploy-pages:
+    name: Deploy Portal to GitHub Pages
+    needs:
+      - prepare-pages
+
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
