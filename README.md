@@ -135,9 +135,74 @@ The workflow automatically executes the Jest test suite after every push and for
 
 ## Start the Local Report Receiver
 
-The local HTTP report receiver and its start command will be added during the report-receiver stage.
+The local HTTP receiver must be running before a self-hosted CI job starts.
 
-The final receiver command, port and JSON report location will be documented here after receiver implementation.
+Start the receiver from the project root:
+
+```bash
+npm run receiver
+```
+
+The receiver listens at:
+
+```text
+http://127.0.0.1:4000
+```
+
+Health-check endpoint:
+
+```text
+http://127.0.0.1:4000/health
+```
+
+Test-report endpoint:
+
+```text
+POST http://127.0.0.1:4000/reports
+```
+
+A completed report is automatically saved locally as:
+
+```text
+test-report.json
+```
+
+The receiver must remain running during passing and failing workflow demonstrations.
+
+## Self-Hosted Runner
+
+The CI job uses a Windows self-hosted GitHub Actions runner with the following labels:
+
+```text
+self-hosted
+Windows
+X64
+csc418
+```
+
+Start the configured runner from its installation directory:
+
+```powershell
+.\run.cmd
+```
+
+Keep the runner and local report receiver running during CI execution.
+
+## Test Report Contents
+
+The generated JSON report includes:
+
+- Repository name
+- Branch
+- Commit SHA
+- Pipeline run identifier
+- Pipeline run number
+- Execution timestamp
+- Individual test names
+- Individual pass or fail results
+- Failure messages where applicable
+- Total, passed and failed counts
+- Overall test status
 
 ## Required Test Scenarios
 

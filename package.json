@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "Assignment Submission Portal with automated testing for the CSC418 DevOps Lab Midterm.",
   "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "test": "jest --runInBand",
-    "test:watch": "jest --watch"
-  },
+"scripts": {
+  "start": "node server.js",
+  "receiver": "node receiver/receiver.js",
+  "test": "jest --runInBand",
+  "test:watch": "jest --watch",
+  "report:build": "node scripts/build-report.js",
+  "report:send": "node scripts/send-report.js"
+},
   "keywords": [
     "devops",
     "nodejs",

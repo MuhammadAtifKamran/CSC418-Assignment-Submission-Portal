@@ -1,31 +1,57 @@
-name: CSC418 Automated Tests
+name: CSC418 Automated Tests and Local Report
 
 on:
   push:
-  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  automated-tests:
-    name: Run Jest Test Suite
-    runs-on: ubuntu-latest
+  test-and-report:
+    name: Test and Deliver Local JSON Report
+    runs-on:
+      - self-hosted
+      - Windows
+      - X64
+      - csc418
+
+    env:
+      REPORT_RECEIVER_URL: http://127.0.0.1:4000/reports
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-          cache: "npm"
+      - name: Verify Node.js
+        shell: pwsh
+        run: |
+          node --version
+          npm --version
 
       - name: Install dependencies
+        shell: pwsh
         run: npm ci
 
       - name: Execute automated tests
-        run: npm test
-        
+        id: tests
+        continue-on-error: true
+        shell: pwsh
+        run: npm test -- --json --outputFile=artifacts/jest-results.json
+
+      - name: Build structured JSON report
+        if: always()
+        shell: pwsh
+        run: npm run report:build
+
+      - name: Send report to local receiver
+        if: always()
+        shell: pwsh
+        run: npm run report:send
+
+      - name: Preserve failed test status
+        if: steps.tests.outcome == 'failure'
+        shell: pwsh
+        run: |
+          Write-Error "One or more automated tests failed."
+          exit 1
