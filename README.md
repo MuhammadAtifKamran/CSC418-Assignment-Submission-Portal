@@ -101,11 +101,37 @@ To stop the server, press:
 Ctrl+C
 ```
 
+## Install Dependencies
+
+After cloning the repository, install the project dependencies:
+
+```bash
+npm ci
+```
+
 ## Execute Automated Tests
 
-The automated test suite and its command will be added during the automated-testing stage of the project.
+Run the complete Jest test suite:
 
-The final test command will be documented here after the Jest test configuration is completed.
+```bash
+npm test
+```
+
+The automated tests verify the following required scenarios:
+
+1. Complete details and a valid submission URL are accepted, saved and displayed.
+2. A submission with a missing registration number is rejected with a validation message.
+3. A submission with an invalid URL is rejected and is not saved.
+
+## Continuous Integration
+
+The GitHub Actions workflow is stored at:
+
+```text
+.github/workflows/ci.yml
+```
+
+The workflow automatically executes the Jest test suite after every push and for pull requests. If any test fails, the automated test job fails.
 
 ## Start the Local Report Receiver
 

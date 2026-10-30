@@ -4,7 +4,9 @@
   "description": "Assignment Submission Portal with automated testing for the CSC418 DevOps Lab Midterm.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch"
   },
   "keywords": [
     "devops",
@@ -14,5 +16,20 @@
     "assignment-portal"
   ],
   "author": "Muhammad Atif Kamran",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^30.5.0",
+    "jest-environment-jsdom": "^30.5.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "roots": [
+      "<rootDir>/tests"
+    ],
+    "testMatch": [
+      "**/*.test.js"
+    ],
+    "clearMocks": true,
+    "restoreMocks": true
+  }
 }
