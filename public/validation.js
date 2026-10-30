@@ -48,7 +48,7 @@
 
         if (!cleanedSubmission.registrationNumber) {
             errors.registrationNumber =
-                "Registration is missing.";
+                "Registration number is required.";
         } else if (
             !REGISTRATION_PATTERN.test(
                 cleanedSubmission.registrationNumber
