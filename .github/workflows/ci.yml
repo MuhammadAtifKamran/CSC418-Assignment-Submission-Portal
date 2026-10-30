@@ -62,8 +62,17 @@ jobs:
         shell: powershell
         run: npm run report:send
 
+      - name: Send email test report
+        if: always()
+        shell: powershell
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_APP_PASSWORD: ${{ secrets.SMTP_APP_PASSWORD }}
+          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
+        run: npm run report:email
+
       - name: Preserve failed test status
-        if: steps.tests.outcome == 'failure'
+        if: always() && steps.tests.outcome == 'failure'
         shell: powershell
         run: |
           Write-Error "One or more automated tests failed."
@@ -71,6 +80,7 @@ jobs:
 
   prepare-pages:
     name: Prepare GitHub Pages Artifact
+
     needs:
       - test-and-report
 
@@ -92,6 +102,7 @@ jobs:
 
   deploy-pages:
     name: Deploy Portal to GitHub Pages
+
     needs:
       - prepare-pages
 

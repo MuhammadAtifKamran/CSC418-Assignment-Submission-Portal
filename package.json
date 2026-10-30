@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "description": "Assignment Submission Portal with automated testing for the CSC418 DevOps Lab Midterm.",
   "main": "server.js",
-"scripts": {
-  "start": "node server.js",
-  "receiver": "node receiver/receiver.js",
-  "test": "jest --runInBand",
-  "test:watch": "jest --watch",
-  "report:build": "node scripts/build-report.js",
-  "report:send": "node scripts/send-report.js"
-},
+  "scripts": {
+    "start": "node server.js",
+    "receiver": "node receiver/receiver.js",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch",
+    "report:build": "node scripts/build-report.js",
+    "report:send": "node scripts/send-report.js",
+    "report:email": "node scripts/send-email-report.js"
+  },
   "keywords": [
     "devops",
     "nodejs",
@@ -34,5 +35,8 @@
     ],
     "clearMocks": true,
     "restoreMocks": true
+  },
+  "dependencies": {
+    "nodemailer": "^10.3.1"
   }
 }
